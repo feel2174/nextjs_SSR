@@ -1,7 +1,7 @@
 import { createElement as h } from 'react'
 
 const staticPage = ({ time }) => {
-    return h('div', null, `${time}`)
+    return <div>{time}</div>
 }
 
 export const getStaticProps = async () => {

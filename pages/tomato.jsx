@@ -1,25 +1,31 @@
-import fetch from 'isomorphic-unfetch'
-import { createElement as h } from 'react'
+import React from 'react'
+import useSWR from 'swr'
+
+function useCounter() {
+    const { data, mutate } = useSWR('state', () => window.count)
+    return {
+        data: data || 100,
+        mutate: (count) => {
+            window.count = count;
+            mutate();
+        }
+    }
+}
+
 const Tomato = ({ user }) => {
-    const username = user && user.name;
-    console.log(user);
+    const { data, mutate } = useCounter();
+    console.log(data);
+    const handleIncrement = () => mutate(data * 2);
+    const handleDecrement = () => mutate( data / 2);
+    
     return (
-        h('div', null, `${username}`)
+       <div>
+           <span>count: {data}</span>
+            <button onClick={handleIncrement}>Increment</button>
+            <button onClick={handleDecrement}>Decrement</button>
+       </div>
     )
 }
 
-export const getServerSideProps = async () => {
-    try {
-        const res = await fetch('https://api.github.com/users/jerrynim');
-        if(res.status === 200) {
-            const user = await res.json();
-            return { props: {} };
-        } 
-        return { props: { user } };
-    } catch(e) {
-        console.log(e);
-        return { props: {} };
-    }
-}
 
 export default Tomato;

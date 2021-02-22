@@ -1,11 +1,12 @@
 import fetch from 'isomorphic-unfetch'
-import { createElement as h } from 'react'
 
 const name = ({ user, time }) => {
     const username = user && user.name;
     console.log(user);
     return (
-        h('div', null, `${username}, ${time}`)
+        <div>
+            {username}, {time}
+        </div>
     )
 }
 

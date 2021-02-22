@@ -1,6 +1,4 @@
-import formatDistance from 'date-fns/formatDistance';
 import fetch from 'isomorphic-unfetch'
-import { createElement as h, Fragment } from 'react'
 import css from 'styled-jsx/css'
 import Profile from '../../components/Profile';
 import Repositories from '../../components/Repositories';
@@ -69,60 +67,16 @@ const style = css`
 `;
 
 const name = ({ user, repos }) => {
-    let value = true
     console.log(user);
     if (!user) {
         return null;
     }
     return (
-        // h('div', { className: 'user-contents-wrapper' },
-        //     h(Profile, { user: user }),
-        //     h('div', { className: 'repos-wrapper' },
-        //         h('div', { className: 'repos-header' }, 'Repositories',
-        //             h('span', { className: 'repos-count' }, `${user.public_repos}`)),
-        //         user && repos &&
-        //         repos.map((repo) => (
-        //             h('div', { key: `${repo.id}`, className: 'repository-wrapper' },
-        //                 h('a', { target: '_blank', rel: 'noreferrer', href: `https://github.com/${user.login}/${repo.name}` },
-        //                     h('h2', { className: 'repository-name' }, `${repo.name}`)),
-        //                 h('p', { className: 'repository-description' }, `${repo.description}`),
-        //                 h('p', { className: 'repository-language' }, `${repo.language}`, h('span', { className: 'repository-updated-at' })))
-        //         )),
-        //     ), h('style', {jsx: 'true'}, style)
-        //     )
-            
-            <div className="user-contents-wrapper">
-                <Profile user={user} />
-                <Repositories user={user} repos={repos} />
-                {/* <div className="repos-wrapper">
-                    <div className="repos-header">
-                        Repositories
-                        <span className="repos-count">{user.public_repos}</span>
-                    </div>
-                    {user && repos &&
-                        repos.map((repo) => (
-                            <div key={repo.id} className="repository-wrapper">
-                                <a target="_blank"
-                                rel="noreferrer"
-                                href={`https://github.com/${user.login}/${repo.name}`}
-                                >
-                                    <h2 className="repository-name">{repo.name}</h2>
-                                </a>
-                                <p className="repository-description">{repo.description}</p>
-                                <p className="repository-language">
-                                    {repo.language}
-                                    <span className="repository-updated-at">
-                                        {formatDistance(new Date(repo.updated_at), new Date(), {
-                                            addSuffix: true,
-                                        })}
-                                    </span>
-                                </p>
-                            </div>
-                        ))
-                    }        
-                </div> */}
-                <style jsx>{style}</style>
-            </div>
+        <div className="user-contents-wrapper">
+            <Profile user={user} />
+            <Repositories user={user} repos={repos} />
+            <style jsx>{style}</style>
+        </div>
     )
 }
 
@@ -133,12 +87,11 @@ export const getServerSideProps = async ({ query }) => {
         let repos;
 
         const userRes = await fetch(`https://api.github.com/users/${name}`);
-       
-        if(userRes.status === 200) {
+        const repoRes = await fetch(`https://api.github.com/users/${name}/repos?sort=updated&page=${page}&per_page=10`);
+        if (userRes.status === 200) {
             user = await userRes.json();
         }
-        const repoRes = await fetch(`https://api.github.com/users/${name}/repos?sort=updated&page=${page}&per_page=10`);
-        if(repoRes.status === 200) {
+        if (repoRes.status === 200) {
             repos = await repoRes.json();
         }
         console.log(repos);

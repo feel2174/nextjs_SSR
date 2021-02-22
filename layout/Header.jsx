@@ -3,7 +3,6 @@ import css from 'styled-jsx/css'
 import { IoLogoGithub} from 'react-icons/io'
 import { useRouter} from 'next/router'
 
-
 const HeaderCss = css`
     .header-wrapper {
         padding: 14px 14px;

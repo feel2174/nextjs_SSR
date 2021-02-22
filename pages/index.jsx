@@ -1,16 +1,22 @@
 import { useState, createElement as h } from 'react'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const App = () => {
     const [username, setUsername] = useState('')
-
+        
     return (
-        h('div', {style: { position: 'absolute', top: '40%', left: '40%'}},
-            h('label', null, 'username',
-                h('input', { value: username, onChange: (e) => setUsername(e.target.value)}), h(Link, { href: `/users/${username}` }, h('a', null, '검색하기'))),
-            h('p', null, `${username} 깃허브 검색하기`),            
-        )
+        <div style={{ position: 'absolute', top: '40%', left: '40%', display: 'flex', flexDirection: 'column'}}>
+            <label style={{ display: 'flex', flexDirection: 'column' }}>
+                username을 입력해주세요.
+                <input value={username} onChange={(e) => setUsername(e.target.value)} ></input>
+                <Link href={`/users/${username}`}>
+                    <a>
+                        검색하기
+                    </a>
+                </Link>
+            </label>
+            <p>{username} 깃허브 검색하기</p>
+        </div>
     )
 }
 

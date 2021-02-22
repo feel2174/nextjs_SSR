@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-unfetch'
-import { createElement as h, Fragment } from 'react'
+import Link from 'next/link';
 import { GoMail, GoLink, GoOrganization, GoLocation } from 'react-icons/go'
 import css from 'styled-jsx/css'
 
@@ -49,27 +49,36 @@ const Profile = ({ user }) => {
     }
     return (
         <>
-        <div className='profile-box'>
-            <div className='profile-image-wrapper'>
-                <img className='profile-image' src={user.avatar_url} alt={`${user.name} 프로필 이미지`}></img>
-                <h2 className='profile-username'>{user.name}</h2>
-                <p className='profile-user-login'>{user.login}</p>
-                <p className='profile-user-bio'>{user.bio}</p>
-                <p className='profile-user-info'>
-                    <GoOrganization size='16' color='#6a737d' />
-                    <span className='profile-user-info-text'>{user.company}</span>
-                </p>
-                <p className='profile-user-info'>
-                    <GoLocation size='16' color='#6a737d' />
-                    <span className='profile-user-info-text'>{user.location}</span>
-                </p>
-                <p className='profile-user-info'>
-                    <GoMail size='16' color='#6a737d' />
-                    <span className='profile-user-info-text'>abc@gmail.com</span>
-                </p>
+            <div className='profile-box'>
+                <div className='profile-image-wrapper'>
+                    <img className='profile-image' src={user.avatar_url} alt={`${user.name} 프로필 이미지`}></img>
+                    <h2 className='profile-username'>{user.name}</h2>
+                    <p className='profile-user-login'>{user.login}</p>
+                    <p className='profile-user-bio'>{user.bio}</p>
+                    <p className='profile-user-info'>
+                        <GoOrganization size='16' color='#6a737d' />
+                        <span className='profile-user-info-text'>{user.company}</span>
+                    </p>
+                    <p className='profile-user-info'>
+                        <GoLocation size='16' color='#6a737d' />
+                        <span className='profile-user-info-text'>{user.location}</span>
+                    </p>
+                    <p className='profile-user-info'>
+                        <GoLink size='16' color='#6a737d' />
+                        <span className='profile-user-info-text'>
+                            <Link target="_blank"
+                                rel="noopener noreferrer"
+                                href={user.html_url}
+                            ><button>{user.name} 깃허브로 이동하기</button>
+                                </Link></span>
+                    </p>
+                    <p className='profile-user-info'>
+                        <GoMail size='16' color='#6a737d' />
+                        <span className='profile-user-info-text'>abc@gmail.com</span>
+                    </p>
+                </div>
+                <style jsx>{style}</style>
             </div>
-        <style jsx>{style}</style>
-        </div>
         </>
         // h(Fragment, null,
         //     h('div', { className: 'profile-box' },
