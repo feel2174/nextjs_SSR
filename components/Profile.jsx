@@ -12,6 +12,7 @@ const style = css`
     .profile-image-wrapper {
         width: 100%;
         border: 1px solid #e1e4e8;
+        padding: 10px;
     }
     .profile-image-wrapper .profile-image {
         display: block;
@@ -47,33 +48,55 @@ const Profile = ({ user }) => {
         return null;
     }
     return (
-        h(Fragment, null,
-            h('div', { className: 'profile-box' },
-                h('div', { className: 'profile-image-wrapper' },
-                    h('img', { className: 'profile-image', src: user.avatar_url, alt: `${user.name} 프로필 이미지` }),
-                    h('h2', { className: 'profile-username' }, `${user.name}`),
-                    h('p', { className: 'profile-user-login' }, `${user.login}`),
-                    h('p', { className: 'profile-user-bio' }, `${user.bio}`),
-                    h('p', { className: 'profile-user-info' },
-                        h(GoOrganization, { size: 16, color: '#6a737d' }),
-                        h('span', { className: 'profile-user-info-text' }, `${user.company}`)
-                    ),
-                    h('p', { className: 'profile-user-info' },
-                        h(GoLink, { size: 16, color: '#6a737d' }),
-                        h('span', { className: 'profile-user-info-text' }, `${user.blog}`)
-                    ),
-                    h('p', { className: 'profile-user-info' },
-                        h(GoLocation, { size: 16, color: '#6a737d' }),
-                        h('span', { className: 'profile-user-info-text' }, `${user.location}`)
-                    ),
-                    h('p', { className: 'profile-user-info' },
-                        h(GoMail, { size: 16, color: '#6a737d' }),
-                        h('span', { className: 'profile-user-info-text' }, 'abc@gmail.com')
-                    ),
-                ),
-                h('style', {jsx: 'true'}, style)),
-         
-        )
+        <>
+        <div className='profile-box'>
+            <div className='profile-image-wrapper'>
+                <img className='profile-image' src={user.avatar_url} alt={`${user.name} 프로필 이미지`}></img>
+                <h2 className='profile-username'>{user.name}</h2>
+                <p className='profile-user-login'>{user.login}</p>
+                <p className='profile-user-bio'>{user.bio}</p>
+                <p className='profile-user-info'>
+                    <GoOrganization size='16' color='#6a737d' />
+                    <span className='profile-user-info-text'>{user.company}</span>
+                </p>
+                <p className='profile-user-info'>
+                    <GoLocation size='16' color='#6a737d' />
+                    <span className='profile-user-info-text'>{user.location}</span>
+                </p>
+                <p className='profile-user-info'>
+                    <GoMail size='16' color='#6a737d' />
+                    <span className='profile-user-info-text'>abc@gmail.com</span>
+                </p>
+            </div>
+        <style jsx>{style}</style>
+        </div>
+        </>
+        // h(Fragment, null,
+        //     h('div', { className: 'profile-box' },
+        //         h('div', { className: 'profile-image-wrapper' },
+        //             h('img', { className: 'profile-image', src: user.avatar_url, alt: `${user.name} 프로필 이미지` }),
+        //             h('h2', { className: 'profile-username' }, `${user.name}`),
+        //             h('p', { className: 'profile-user-login' }, `${user.login}`),
+        //             h('p', { className: 'profile-user-bio' }, `${user.bio}`),
+        //             h('p', { className: 'profile-user-info' },
+        //                 h(GoOrganization, { size: 16, color: '#6a737d' }),
+        //                 h('span', { className: 'profile-user-info-text' }, `${user.company}`)
+        //             ),
+        //             h('p', { className: 'profile-user-info' },
+        //                 h(GoLink, { size: 16, color: '#6a737d' }),
+        //                 h('span', { className: 'profile-user-info-text' }, `${user.blog}`)
+        //             ),
+        //             h('p', { className: 'profile-user-info' },
+        //                 h(GoLocation, { size: 16, color: '#6a737d' }),
+        //                 h('span', { className: 'profile-user-info-text' }, `${user.location}`)
+        //             ),
+        //             h('p', { className: 'profile-user-info' },
+        //                 h(GoMail, { size: 16, color: '#6a737d' }),
+        //                 h('span', { className: 'profile-user-info-text' }, 'abc@gmail.com')
+        //             ),
+        //         ),
+        //         h('style', {jsx: 'true'}, style)),
+        // )
     )
 }
 
